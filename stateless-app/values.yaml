@@ -1,2 +1,5 @@
 nameOverride: "sandy"
 fullnameOverride: "sandy"
+replicaCount: 2
+autoscaling:
+  enabled: false

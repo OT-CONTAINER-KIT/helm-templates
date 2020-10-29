@@ -4,3 +4,6 @@ metadata:
   name: {{ include "stateless-app.fullname" . }}
   labels:
     {{- include "stateless-app.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  
