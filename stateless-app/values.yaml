@@ -5,3 +5,5 @@ autoscaling:
   enabled: false
 podAnnotations:
   app.kubernetes.io/managed-by: Helm
+podSecurityContext: 
+  fsGroup: 2000
