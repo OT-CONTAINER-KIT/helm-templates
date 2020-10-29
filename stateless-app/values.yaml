@@ -7,3 +7,13 @@ podAnnotations:
   app.kubernetes.io/managed-by: Helm
 podSecurityContext: 
   fsGroup: 2000
+containers:
+  name: nginx
+  image:
+    repository: nginx
+    pullPolicy: IfNotPresent
+    tag: ""
+  ports:
+    name: http
+    containerPort: 80
+    protocol: TCP

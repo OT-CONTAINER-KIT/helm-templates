@@ -20,3 +20,11 @@ spec:
     spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Values.containers.name }}
+          image: "{{ .Values.containers.image.repository }}:{{ .Values.containers.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.containers.image.pullPolicy }}
+          ports:
+            - name: {{ .Values.containers.ports.name }}
+              containerPort: {{ .Values.containers.ports.containerPort }}
+              protocol: {{ .Values.containers.ports.protocol }}
