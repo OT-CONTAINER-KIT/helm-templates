@@ -6,4 +6,6 @@ metadata:
     {{- include "stateless-app.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
-  
+  selector:
+    matchLabels:
+      {{- include "stateless-app.selectorLabels" . | nindent 6 }}
