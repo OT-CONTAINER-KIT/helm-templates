@@ -23,14 +23,22 @@ containers:
         port: http 
       readiness:
         path: /
-        port: http 
+        port: http
+    resources: 
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi 
   - name: nginx2
     image:
       repository: nginx
       pullPolicy: IfNotPresent
-      tag: "1.7.9"
+      tag: "1.17.9"
     ports:
       name: http
       containerPort: 80
       protocol: TCP
     probes: {}
+    resources: {}

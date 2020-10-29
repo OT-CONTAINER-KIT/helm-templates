@@ -41,4 +41,6 @@ spec:
               path: {{ .path }}
               port: {{ .port }}
           {{- end }}
+          resources:
+            {{- toYaml .resources | nindent 12 }}
         {{- end }}
