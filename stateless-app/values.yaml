@@ -8,12 +8,21 @@ podAnnotations:
 podSecurityContext: 
   fsGroup: 2000
 containers:
-  name: nginx
-  image:
-    repository: nginx
-    pullPolicy: IfNotPresent
-    tag: ""
-  ports:
-    name: http
-    containerPort: 80
-    protocol: TCP
+  - name: nginx
+    image:
+      repository: nginx
+      pullPolicy: IfNotPresent
+      tag: "1.17.9"
+    ports:
+      name: http
+      containerPort: 80
+      protocol: TCP
+  - name: nginx2
+    image:
+      repository: nginx
+      pullPolicy: IfNotPresent
+      tag: "1.7.9"
+    ports:
+      name: http
+      containerPort: 80
+      protocol: TCP
