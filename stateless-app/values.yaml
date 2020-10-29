@@ -17,6 +17,13 @@ containers:
       name: http
       containerPort: 80
       protocol: TCP
+    probes:
+      liveness:
+        path: /
+        port: http 
+      readiness:
+        path: /
+        port: http 
   - name: nginx2
     image:
       repository: nginx
@@ -26,3 +33,4 @@ containers:
       name: http
       containerPort: 80
       protocol: TCP
+    probes: {}

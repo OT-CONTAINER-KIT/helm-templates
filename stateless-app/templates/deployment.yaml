@@ -29,4 +29,16 @@ spec:
             - name: {{ .ports.name }}
               containerPort: {{ .ports.containerPort }}
               protocol: {{ .ports.protocol }}
+          {{- with .probes.liveness }}
+          livenessProbe:
+            httpGet:
+              path: {{ .path }}
+              port: {{ .port }}
+          {{- end }}
+          {{- with .probes.readiness }}
+          readinessProbe:
+            httpGet:
+              path: {{ .path }}
+              port: {{ .port }}
+          {{- end }}
         {{- end }}
