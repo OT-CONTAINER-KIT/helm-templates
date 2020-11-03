@@ -9,6 +9,8 @@ podSecurityContext:
   fsGroup: 2000
 default:
   imagePullPolicy: IfNotPresent
+  livelinessProbe: health/live
+  readinessProbe: health/ready
 containers:
   - name: nginx
     image:
@@ -20,11 +22,9 @@ containers:
       protocol: TCP
     probes:
       liveness:
-        path: /
-        port: http 
+        enabled: true
       readiness:
-        path: /
-        port: http
+        enabled: false
     resources: 
       limits:
         cpu: 100m
@@ -41,5 +41,8 @@ containers:
       name: http
       containerPort: 80
       protocol: TCP
-    probes: {}
+    probes:
+      liveness:
+        enabled: true
+        path: /health
     resources: {}

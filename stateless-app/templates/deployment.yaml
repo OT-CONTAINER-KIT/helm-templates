@@ -24,22 +24,16 @@ spec:
         {{- range .Values.containers }}
         - name: {{ .name }}
           image: "{{ .image.repository }}:{{ .image.tag }}"
-          imagePullPolicy: {{ .image.pullPolicy | default "IfNotPresent" }}
+          imagePullPolicy: {{ .image.pullPolicy | default $.Values.default.imagePullPolicy }}
           ports:
             - name: {{ .ports.name }}
               containerPort: {{ .ports.containerPort }}
               protocol: {{ .ports.protocol }}
-          {{- with .probes.liveness }}
+          {{- if .probes.liveness.enabled | default true }}
           livenessProbe:
             httpGet:
-              path: {{ .path }}
-              port: {{ .port }}
-          {{- end }}
-          {{- with .probes.readiness }}
-          readinessProbe:
-            httpGet:
-              path: {{ .path }}
-              port: {{ .port }}
+              path: {{ .probes.liveness.path | default $.Values.default.livelinessProbe }}
+              port: deepak
           {{- end }}
           resources:
             {{- toYaml .resources | nindent 12 }}
