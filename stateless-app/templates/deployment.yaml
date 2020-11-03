@@ -24,7 +24,7 @@ spec:
         {{- range .Values.containers }}
         - name: {{ .name }}
           image: "{{ .image.repository }}:{{ .image.tag }}"
-          imagePullPolicy: {{ .image.pullPolicy }}
+          imagePullPolicy: {{ .image.pullPolicy | default "IfNotPresent" }}
           ports:
             - name: {{ .ports.name }}
               containerPort: {{ .ports.containerPort }}
