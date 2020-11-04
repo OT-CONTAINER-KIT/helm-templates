@@ -37,11 +37,21 @@ spec:
               path: {{ .probes.liveness.path }}
               port: {{ .probes.liveness.port }}
           {{- end }}  
+          {{- if .probes.readiness }}
+          readinessProbe:
+            httpGet:
+              path: {{ .probes.readiness.path }}
+              port: {{ .probes.readiness.port }}
+          {{- end }}  
           {{- else }}
           livenessProbe:
             httpGet:
               path: {{ $.Values.default.probes.liveness.path }}
               port: {{ $.Values.default.probes.liveness.port }}
+          readinessProbe:
+            httpGet:
+              path: {{ $.Values.default.probes.readiness.path }}
+              port: {{ $.Values.default.probes.readiness.port }}
           {{- end }}
           resources:
             {{- toYaml .resources | nindent 12 }}
