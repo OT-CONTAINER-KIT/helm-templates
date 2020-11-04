@@ -29,11 +29,19 @@ spec:
             - name: {{ .ports.name }}
               containerPort: {{ .ports.containerPort }}
               protocol: {{ .ports.protocol }}
-          {{- if .probes.liveness.enabled | default true }}
+
+          {{- if .probes }}
+          {{- if .probes.liveness }}
           livenessProbe:
             httpGet:
-              path: {{ .probes.liveness.path | default $.Values.default.livelinessProbe }}
-              port: deepak
+              path: {{ .probes.liveness.path }}
+              port: {{ .probes.liveness.port }}
+          {{- end }}  
+          {{- else }}
+          livenessProbe:
+            httpGet:
+              path: {{ $.Values.default.probes.liveness.path }}
+              port: {{ $.Values.default.probes.liveness.port }}
           {{- end }}
           resources:
             {{- toYaml .resources | nindent 12 }}
