@@ -24,22 +24,30 @@ spec:
         {{- range .Values.containers }}
         - name: {{ .name }}
           image: "{{ .image.repository }}:{{ .image.tag }}"
-          imagePullPolicy: {{ .image.pullPolicy | default "IfNotPresent" }}
+          imagePullPolicy: {{ .image.pullPolicy | default $.Values.default.imagePullPolicy }}
           ports:
             - name: {{ .ports.name }}
               containerPort: {{ .ports.containerPort }}
               protocol: {{ .ports.protocol }}
-          {{- with .probes.liveness }}
+
+          {{- if .probes }}
+          {{- if .probes.liveness }}
           livenessProbe:
             httpGet:
-              path: {{ .path }}
-              port: {{ .port }}
-          {{- end }}
-          {{- with .probes.readiness }}
+              {{- toYaml .probes.liveness | nindent 14 }}
+          {{- end }}  
+          {{- if .probes.readiness }}
           readinessProbe:
             httpGet:
-              path: {{ .path }}
-              port: {{ .port }}
+              {{- toYaml .probes.readiness | nindent 14 }}
+          {{- end }}  
+          {{- else }}
+          livenessProbe:
+            httpGet:
+              {{- toYaml $.Values.default.probes.liveness | nindent 14 }}
+          readinessProbe:
+            httpGet:
+              {{- toYaml $.Values.default.probes.readiness | nindent 14 }}
           {{- end }}
           resources:
             {{- toYaml .resources | nindent 12 }}

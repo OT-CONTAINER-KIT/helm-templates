@@ -8,6 +8,13 @@ podAnnotations:
 podSecurityContext: 
   fsGroup: 2000
 default:
+  probes:
+      liveness:
+        path: /health/live
+        port: http
+      readiness:
+        path: /health/ready
+        port: http
   imagePullPolicy: IfNotPresent
 containers:
   - name: nginx
@@ -20,10 +27,7 @@ containers:
       protocol: TCP
     probes:
       liveness:
-        path: /
-        port: http 
-      readiness:
-        path: /
+        path: /health
         port: http
     resources: 
       limits:
@@ -41,5 +45,17 @@ containers:
       name: http
       containerPort: 80
       protocol: TCP
-    probes: {}
+    probes:
+      readiness:
+        path: /health
+        port: http
+  - name: nginx3
+    image:
+      repository: nginx
+      pullPolicy: Always
+      tag: "1.17.9"
+    ports:
+      name: http
+      containerPort: 80
+      protocol: TCP
     resources: {}
