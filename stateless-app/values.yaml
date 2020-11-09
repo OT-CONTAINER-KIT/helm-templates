@@ -7,11 +7,12 @@ podAnnotations:
   app.kubernetes.io/managed-by: Helm
 podSecurityContext: 
   fsGroup: 2000
+default:
+  imagePullPolicy: IfNotPresent
 containers:
   - name: nginx
     image:
       repository: nginx
-      pullPolicy: IfNotPresent
       tag: "1.17.9"
     ports:
       name: http
@@ -34,7 +35,7 @@ containers:
   - name: nginx2
     image:
       repository: nginx
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
       tag: "1.17.9"
     ports:
       name: http
