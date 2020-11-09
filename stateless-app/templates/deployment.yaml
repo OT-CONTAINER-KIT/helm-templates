@@ -34,24 +34,20 @@ spec:
           {{- if .probes.liveness }}
           livenessProbe:
             httpGet:
-              path: {{ .probes.liveness.path }}
-              port: {{ .probes.liveness.port }}
+              {{- toYaml .probes.liveness | nindent 14 }}
           {{- end }}  
           {{- if .probes.readiness }}
           readinessProbe:
             httpGet:
-              path: {{ .probes.readiness.path }}
-              port: {{ .probes.readiness.port }}
+              {{- toYaml .probes.readiness | nindent 14 }}
           {{- end }}  
           {{- else }}
           livenessProbe:
             httpGet:
-              path: {{ $.Values.default.probes.liveness.path }}
-              port: {{ $.Values.default.probes.liveness.port }}
+              {{- toYaml $.Values.default.probes.liveness | nindent 14 }}
           readinessProbe:
             httpGet:
-              path: {{ $.Values.default.probes.readiness.path }}
-              port: {{ $.Values.default.probes.readiness.port }}
+              {{- toYaml $.Values.default.probes.readiness | nindent 14 }}
           {{- end }}
           resources:
             {{- toYaml .resources | nindent 12 }}
